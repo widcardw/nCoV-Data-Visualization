@@ -16,6 +16,7 @@ const tooltip: TooltipComponentOption = {
     height: 30,
   },
   showDelay: 100,
+  formatter: '{b}<br/>{c} 人',
 }
 
 export default tooltip

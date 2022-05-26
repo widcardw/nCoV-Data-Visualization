@@ -9,7 +9,11 @@ defineProps<{
 <template>
   <Suspense>
     <template #default>
-      <MapTemplate :map-name="code.toString()" :map-code="code" />
+      <MapTemplate
+        :map-name="code.toString()"
+        :map-code="code"
+        :path="`/province/period?start=2022-03-15&end=2022-03-15&code=${code}`"
+      />
     </template>
     <template #fallback>
       Loading...

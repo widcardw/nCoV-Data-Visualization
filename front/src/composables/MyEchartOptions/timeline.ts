@@ -4,10 +4,7 @@ const timeline: TimelineComponentOption = {
   loop: false,
   axisType: 'time',
   data: [
-    '2020-01-01',
-    '2020-01-02',
-    '2020-01-03',
-    '2020-01-04',
+    '2022-03-15',
   ],
   playInterval: 500,
   symbolSize: 5,

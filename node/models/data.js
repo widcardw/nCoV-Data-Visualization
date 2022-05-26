@@ -1,4 +1,4 @@
-const mongoose =require('mongoose')
+const mongoose = require('mongoose')
 
 const dataSchema = new mongoose.Schema({
     continentName: {
@@ -9,11 +9,11 @@ const dataSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    countryName : {
+    countryName: {
         type: String,
         required: true,
     },
-    countryEnglishName : {
+    countryEnglishName: {
         type: String,
         required: true,
     },
@@ -26,27 +26,27 @@ const dataSchema = new mongoose.Schema({
         required: true,
     },
     province_zipCode: {
-        type: String,
-        required: true,    
+        type: Number,
+        required: true,
     },
     province_confirmedCount: {
         type: Number,
-        required: true,  
+        required: true,
     },
     province_suspectedCount: {
         type: Number,
-        required: true,  
+        required: true,
     },
     province_curedCount: {
         type: Number,
-        required: true,  
+        required: true,
     },
     province_deadCount: {
         type: Number,
-        required: true,  
+        required: true,
     },
     updateTime: {
-        type: Date,
+        type: String,
         required: true,
     },
     cityName: {
@@ -58,31 +58,28 @@ const dataSchema = new mongoose.Schema({
         required: false,
     },
     city_zipCode: {
-        type: String,
+        type: Number,
         required: false,
     },
     city_confirmedCount: {
-        type:Number,
+        type: Number,
         required: false,
     },
     city_suspectedCount: {
-        type:Number,
+        type: Number,
         required: false,
     },
     city_curedCount: {
-        type:Number,
+        type: Number,
         required: false,
     },
     city_deadCount: {
-        type:Number,
+        type: Number,
         required: false,
     },
 })
 
-const totalData = mongoose.model('data', dataSchema, 'DXYData')
-const provinceData = mongoose.model('province', dataSchema, 'ProvinceData')
+const provinceData = mongoose.model('provinceData', dataSchema, 'ProvinceData')
+const totalData = mongoose.model('totalData', dataSchema, 'DXYData')
 
-module.exports = {
-    totalData,
-    provinceData
-};
+module.exports = { totalData, provinceData }

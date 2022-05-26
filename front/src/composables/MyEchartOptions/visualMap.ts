@@ -2,12 +2,12 @@ import type { VisualMapComponentOption } from 'echarts'
 
 const visualMap: VisualMapComponentOption = {
   min: 0,
-  max: 200000,
+  max: 5000,
   text: ['High', 'Low'],
   realtime: false,
   calculable: true,
   inRange: {
-    color: ['lightskyblue', 'yellow', 'orangered'],
+    color: ['white', 'orange', 'crimson'],
   },
 }
 
