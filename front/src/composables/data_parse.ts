@@ -1,3 +1,5 @@
+import type { TimelineComponentOption } from 'echarts'
+
 export interface DailyData {
   time: string
   data: Array<{
@@ -22,4 +24,23 @@ export const parseSeries = (data: DailyData[], mapName: string) => {
     }
     return serie
   })
+}
+
+export const getTimeLine = (data: DailyData[]) => {
+  if (!data) {
+    return {
+      loop: false,
+      axisType: 'time',
+      data: ['2020-01-01'],
+      playInterval: 500,
+      symbolSize: 5,
+    } as TimelineComponentOption
+  }
+  return {
+    loop: false,
+    axisType: 'time',
+    data: data.map(it => it.time),
+    playInterval: 500,
+    symbolSize: 5,
+  } as TimelineComponentOption
 }

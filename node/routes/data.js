@@ -3,6 +3,20 @@ const { totalData, provinceData } = require('../models/data')
 
 router.prefix("/api")
 
+function unique(arr) {
+    if (!Array.isArray(arr)) {
+        console.log('type error!')
+        return null
+    }
+    var array = [];
+    for (var i = 0; i < arr.length; i++) {
+        if (array.findIndex(it => it.name === arr[i].name) === -1) {
+            array.push(arr[i])
+        }
+    }
+    return array;
+}
+
 const parseData = (result, key) => {
     const retVal = []
     if (result.length > 0) {
@@ -17,10 +31,11 @@ const parseData = (result, key) => {
                 }
                 row.push({
                     name: result[i][`${key}Name`],
-                    value: result[i][`${key}_confirmedCount`] - result[i][`${key}_curedCount`]
+                    value: result[i][`${key}_confirmedCount`]
                 })
                 i++
             }
+            row = unique(row)
             retVal.push({
                 time,
                 data: row
@@ -120,7 +135,6 @@ router.get('/province/period', async (ctx, next) => {
         // .limit(5)
         .sort({ updateTime: 1 })
         .then((result) => {
-            console.log('resolve', result)
             const retVal = parseData(result, 'city')
             ctx.body = { code: 200, data: retVal }
         })

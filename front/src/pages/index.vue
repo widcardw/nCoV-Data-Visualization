@@ -6,6 +6,8 @@ const go = () => {
   if (name)
     router.push(`/hi/${encodeURIComponent(name)}`)
 }
+
+const date = $ref('2022-03-15')
 </script>
 
 <template>
@@ -21,6 +23,11 @@ const go = () => {
     </p>
 
     <div py-4 />
+
+    <div>
+      <OriCalender v-model:date="date" />
+      {{ date }}
+    </div>
 
     <input
       id="input"

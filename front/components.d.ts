@@ -5,8 +5,11 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Back: typeof import('./src/components/Back.vue')['default']
+    Calender: typeof import('./src/components/Calender.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     MapTemplate: typeof import('./src/components/MapTemplate.vue')['default']
+    OriCalender: typeof import('./src/components/OriCalender.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SuspenseMap: typeof import('./src/components/SuspenseMap.vue')['default']

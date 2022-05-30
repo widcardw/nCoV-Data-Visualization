@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { CodeType } from '~/data/maps'
-
 defineProps<{
   code: CodeType
 }>()
@@ -12,11 +11,12 @@ defineProps<{
       <MapTemplate
         :map-name="code.toString()"
         :map-code="code"
-        :path="`/province/period?start=2022-03-15&end=2022-03-15&code=${code}`"
+        path="/province/period"
       />
     </template>
     <template #fallback>
       Loading...
     </template>
   </Suspense>
+  <Back content="../" />
 </template>
