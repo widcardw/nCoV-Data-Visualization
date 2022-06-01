@@ -1,20 +1,31 @@
 const router = require('koa-router')()
 const { totalData, provinceData } = require('../models/data')
+const { parseDaily } = require('../utils/parseDaily')
+const { uniqueByName } = require('../utils/unique')
 
 router.prefix("/api")
 
-function unique(arr) {
-    if (!Array.isArray(arr)) {
-        console.log('type error!')
-        return null
+const fillMissing = (values) => {
+    if (!values || values.length === 0) 
+        return []
+    values.sort(it => it.time)
+    let res = []
+    res.push(values[0])
+    for (let i = 1; i < values.length; i++) {
+        let prev = JSON.parse(JSON.stringify(res.at(res.length - 1)))
+        let current = values[i]
+        current.data.map(it => {
+            let index = prev.data.findIndex(jt => jt.name === it.name)
+            if (index !== -1) {
+                prev.data[index] = it
+            } else {
+                prev.data.push(it)
+            }
+        })
+        prev.time = current.time
+        res.push(prev)
     }
-    var array = [];
-    for (var i = 0; i < arr.length; i++) {
-        if (array.findIndex(it => it.name === arr[i].name) === -1) {
-            array.push(arr[i])
-        }
-    }
-    return array;
+    return res
 }
 
 const parseData = (result, key) => {
@@ -35,7 +46,7 @@ const parseData = (result, key) => {
                 })
                 i++
             }
-            row = unique(row)
+            row = uniqueByName(row)
             retVal.push({
                 time,
                 data: row
@@ -43,7 +54,7 @@ const parseData = (result, key) => {
             time = newTime
         }
     }
-    return retVal
+    return fillMissing(retVal)
 }
 
 // 根据 id 查询
@@ -74,7 +85,7 @@ router.get('/country', async (ctx, next) => {
 })
 
 // 根据日期范围查询全国数据
-router.get('/china/period', async (ctx, next) => {
+router.get('/china/daily', async (ctx, next) => {
     const { start, end } = ctx.query
     await provinceData
         .find({
@@ -85,7 +96,8 @@ router.get('/china/period', async (ctx, next) => {
             ]
         })
         .then(result => {
-            ctx.body = { code: 200, data: result }
+            const retVal = parseDaily(result)
+            ctx.body = { code: 200, data: retVal }
         })
         .catch(err => {
             ctx.body = { code: 400, msg: `用户查询异常：${err}` }
@@ -139,6 +151,30 @@ router.get('/province/period', async (ctx, next) => {
             ctx.body = { code: 200, data: retVal }
         })
         .catch((err) => {
+            ctx.body = { code: 400, msg: `用户查询异常：${err}` }
+        })
+})
+
+router.get('/province/daily', async (ctx, next) => {
+    let { code, start, end } = ctx.query
+    start = start || '2022-04-19'
+    end = end || '2022-04-19'
+    code = code ? Number(code) : 110000
+    console.log(code, start, end)
+
+    await provinceData
+        .find({
+            province_zipCode: code,
+            $and: [
+                { '_id.updateTime': { $gte: start } },
+                { '_id.updateTime': { $lte: end } }
+            ]
+        })
+        .then(result => {
+            const retVal = parseDaily(result)
+            ctx.body = { code: 200, data: retVal }
+        })
+        .catch(err => {
             ctx.body = { code: 400, msg: `用户查询异常：${err}` }
         })
 })

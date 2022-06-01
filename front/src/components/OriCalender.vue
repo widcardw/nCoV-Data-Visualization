@@ -14,5 +14,6 @@ const input = useVModel(props, 'date', emits, { passive: true })
     text-sm
     border="~ rounded gray-200 dark:gray-700"
     outline="none active:none"
+    bg-transparent
   >
 </template>

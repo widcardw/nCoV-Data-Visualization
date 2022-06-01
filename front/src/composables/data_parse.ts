@@ -38,9 +38,13 @@ export const getTimeLine = (data: DailyData[]) => {
   }
   return {
     loop: false,
+    autoPlay: false,
     axisType: 'time',
     data: data.map(it => it.time),
     playInterval: 500,
     symbolSize: 5,
+    label: {
+      show: false,
+    },
   } as TimelineComponentOption
 }

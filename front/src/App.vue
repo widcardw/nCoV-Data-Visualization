@@ -17,3 +17,8 @@ body, html {
   padding: 0;
 }
 </style>
+
+<route lang="yaml">
+meta:
+  layout: default
+</route>
