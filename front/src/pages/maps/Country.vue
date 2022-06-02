@@ -4,16 +4,27 @@ const endTime = useStorage('endTime', '2020-03-20')
 
 const dataLineRef = $ref<HTMLElement>()
 const mapRef = $ref<HTMLElement>()
+const threeCountRef = $ref<HTMLElement>()
 
 const refreshData = () => {
   nextTick(() => {
     (dataLineRef as any).refreshData();
-    (mapRef as any).refreshData()
+    (mapRef as any).refreshData();
+    (threeCountRef as any).refreshData()
   })
 }
 </script>
 
 <template>
+  <Suspense>
+    <ThreeCount
+      ref="threeCountRef"
+      path="/china/display"
+      :start-time="startTime"
+      :end-time="endTime"
+      :map-code="100000"
+    />
+  </Suspense>
   <Suspense>
     <template #default>
       <div>

@@ -6,7 +6,7 @@ const { uniqueByName } = require('../utils/unique')
 router.prefix("/api")
 
 const fillMissing = (values) => {
-    if (!values || values.length === 0) 
+    if (!values || values.length === 0)
         return []
     values.sort(it => it.time)
     let res = []
@@ -175,6 +175,73 @@ router.get('/province/daily', async (ctx, next) => {
             ctx.body = { code: 200, data: retVal }
         })
         .catch(err => {
+            ctx.body = { code: 400, msg: `用户查询异常：${err}` }
+        })
+})
+
+router.get('/china/display', async (ctx, next) => {
+    const { start, end } = ctx.query
+    await provinceData
+        .find({
+            provinceName: '中国',
+            $and: [
+                { '_id.updateTime': { $gte: start } },
+                { '_id.updateTime': { $lte: end } }
+            ]
+        })
+        .sort({ updateTime: -1 })
+        .limit(1)
+        .then((result) => {
+            if (result.length === 0) {
+                ctx.body = { code: 400, msg: '查询结果为空' }
+            }
+            const retVal = {
+                updateTime: result[0].updateTime,
+                province_confirmedCount: result[0].province_confirmedCount,
+                province_suspectedCount: result[0].province_suspectedCount,
+                province_curedCount: result[0].province_curedCount,
+                province_deadCount: result[0].province_deadCount,
+            }
+            ctx.body = { code: 200, data: retVal }
+        })
+        .catch((err) => {
+            ctx.body = { code: 400, msg: `用户查询异常：${err}` }
+        })
+})
+
+router.get('/province/display', async (ctx, next) => {
+    let { start, end, code } = ctx.query
+    start = start || '2022-04-19'
+    end = end || '2022-04-19'
+    code = code ? Number(code) : 110000
+    console.log(code, start, end)
+
+    await provinceData
+        .find({
+            province_zipCode: code,
+            $and: [
+                { '_id.updateTime': { $gte: start } },
+                { '_id.updateTime': { $lte: end } }
+            ]
+        })
+        .sort({ updateTime: -1 })
+        .limit(1)
+        .then((result) => {
+            console.log(result)
+            if (result.length === 0) {
+                ctx.body = { code: 400, msg: '查询结果为空' }
+                return
+            }
+            const retVal = {
+                updateTime: result[0].updateTime,
+                province_confirmedCount: result[0].province_confirmedCount,
+                province_suspectedCount: result[0].province_suspectedCount,
+                province_curedCount: result[0].province_curedCount,
+                province_deadCount: result[0].province_deadCount,
+            }
+            ctx.body = { code: 200, data: retVal }
+        })
+        .catch((err) => {
             ctx.body = { code: 400, msg: `用户查询异常：${err}` }
         })
 })

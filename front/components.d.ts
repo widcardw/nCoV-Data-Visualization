@@ -7,6 +7,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Back: typeof import('./src/components/Back.vue')['default']
     Calender: typeof import('./src/components/Calender.vue')['default']
+    DataDisplay: typeof import('./src/components/DataDisplay.vue')['default']
     DataLine: typeof import('./src/components/DataLine.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     MapTemplate: typeof import('./src/components/MapTemplate.vue')['default']
@@ -14,6 +15,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SuspenseMap: typeof import('./src/components/SuspenseMap.vue')['default']
+    ThreeCount: typeof import('./src/components/ThreeCount.vue')['default']
   }
 }
 
