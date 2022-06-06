@@ -1,7 +1,15 @@
-const { uniqueByArrayFirst } = require('./unique')
+const { uniqueByKey } = require('./unique')
 
 function parseDaily (data) {
-    return uniqueByArrayFirst(data.map(it => [it.updateTime.substr(0, 10), it.province_confirmedCount]))
+    return uniqueByKey(data.map(it => {
+        return {
+            updateTime: it.updateTime.substr(0, 10),
+            confirmedCount: it.province_confirmedCount,
+            suspectedCount: it.province_suspectedCount,
+            curedCount: it.province_curedCount,
+            deadCount: it.province_deadCount,
+        }
+    }), () => 'updateTime')
 }
 
 module.exports = {

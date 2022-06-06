@@ -10,12 +10,14 @@ const endTime = useStorage('endTime', '2020-03-20')
 const dataLineRef = $ref<HTMLElement>()
 const mapRef = $ref<HTMLElement>()
 const threeCountRef = $ref<HTMLElement>()
+const newAdds = $ref<HTMLElement>()
 
 const refreshData = () => {
   nextTick(() => {
     (dataLineRef as any).refreshData();
     (mapRef as any).refreshData();
     (threeCountRef as any).refreshData()
+    (newAdds as any).refreshData()
   })
 }
 
@@ -34,36 +36,37 @@ console.log('province', startTime.value, endTime.value)
     />
   </Suspense>
   <Suspense>
-    <template #default>
-      <div>
-        <MapTemplate
-          ref="mapRef"
-          :map-name="code.toString()"
-          :map-code="code"
-          path="/province/period"
-          :start-time="startTime"
-          :end-time="endTime"
-        />
-        <DataLine
-          ref="dataLineRef"
-          path="/province/daily"
-          :map-code="code"
-          :start-time="startTime"
-          :end-time="endTime"
-        />
-      </div>
-    </template>
-    <template #fallback>
-      Loading...
-    </template>
+    <MapTemplate
+      ref="mapRef"
+      :map-name="code.toString()"
+      :map-code="code"
+      path="/province/period"
+      :start-time="startTime"
+      :end-time="endTime"
+    />
+  </Suspense>
+  <Suspense>
+    <div flex>
+      <DataLine
+        ref="dataLineRef"
+        path="/province/daily"
+        :map-code="code"
+        :start-time="startTime"
+        :end-time="endTime"
+      />
+      <NewAdds
+        ref="newAddsRef"
+        path="/province/daily"
+        :map-code="code"
+        :start-time="startTime"
+        :end-time="endTime"
+      />
+    </div>
   </Suspense>
   <div>
     <OriCalender v-model:date="startTime" />
-    <span p="x-4 y-2" icon-btn i="carbon-arrow-right" />
+    <span p="x-4 y-2" icon-btn i="carbon-arrow-right" @click="refreshData" />
     <OriCalender v-model:date="endTime" />
-    <button block ma mt-2 p="x-4 y-2" border="~ rounded gray-200 dark:gray-700" text-sm @click="refreshData">
-      刷新
-    </button>
   </div>
 </template>
 

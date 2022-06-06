@@ -27,7 +27,7 @@ const getOption = (data: Array<{
       trigger: 'axis',
     },
     legend: {
-      data: ['确诊人数', '疑似人数', '治愈人数', '死亡人数'],
+      data: ['新增确诊', '新增疑似', '新增治愈', '新增死亡'],
     },
     // x 轴为时间
     xAxis: {
@@ -38,14 +38,14 @@ const getOption = (data: Array<{
       type: 'value',
     },
     series: [{
-      name: '确诊人数',
+      name: '新增确诊',
       color: 'crimson',
       // 折线图
       type: 'line',
       // 数据为确诊人数
       data: data.map(({ confirmedCount }) => confirmedCount),
     }, {
-      name: '疑似人数',
+      name: '新增疑似',
       color: 'orange',
       // 折线图
       type: 'line',
@@ -53,7 +53,7 @@ const getOption = (data: Array<{
       data: data.map(({ suspectedCount }) => suspectedCount),
     },
     {
-      name: '治愈人数',
+      name: '新增治愈',
       color: 'green',
       // 折线图
       type: 'line',
@@ -61,7 +61,7 @@ const getOption = (data: Array<{
       data: data.map(({ curedCount }) => curedCount),
     },
     {
-      name: '死亡人数',
+      name: '新增死亡',
       color: 'grey',
       // 折线图
       type: 'line',

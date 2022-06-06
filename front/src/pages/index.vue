@@ -14,12 +14,6 @@ const router = useRouter()
       <em text-sm op75>Opinionated Vite Starter Template</em>
     </p>
     <div py-4 />
-    <div flex gap-20 justify-center>
-      <DataDisplay icon="i-carbon-coronavirus" title="感染" :data="9" style-class="text-red-700" />
-      <DataDisplay icon="i-carbon-warning" title="疑似" :data="9" style-class="text-orange" />
-      <DataDisplay icon="i-carbon-face-wink" title="治愈" :data="9" style-class="text-green-600" />
-      <DataDisplay icon="i-carbon-face-dizzy" title="死亡" :data="9" style-class="text-zinc" />
-    </div>
 
     <button btn text-sm @click="router.push('/maps/Country')">
       展示

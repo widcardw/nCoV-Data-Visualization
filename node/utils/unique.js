@@ -26,6 +26,20 @@ function uniqueByArrayFirst (arr) {
     return array
 }
 
+function uniqueByKey(arr, key) {
+    if (!Array.isArray(arr)) {
+        console.log('type error!')
+        return null
+    }
+    let array = []
+    for (let i = 0; i < arr.length; i++) {
+        if (array.findIndex(it => it[key()] === arr[i][key()]) === -1) {
+            array.push(arr[i])
+        }
+    }
+    return array
+}
+
 module.exports = {
-    uniqueByName, uniqueByArrayFirst
+    uniqueByName, uniqueByArrayFirst, uniqueByKey
 }

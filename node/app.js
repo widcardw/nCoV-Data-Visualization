@@ -9,6 +9,8 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const data = require('./routes/data')
+const news = require('./routes/news')
+const newAdds = require('./routes/newAdds')
 
 const mongoConnect = require('./db')
 const { getData } = require('./test/queryData')
@@ -55,6 +57,8 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(data.routes(), data.allowedMethods())
+app.use(news.routes(), news.allowedMethods())
+app.use(newAdds.routes(), newAdds.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

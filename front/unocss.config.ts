@@ -32,4 +32,27 @@ export default defineConfig({
   //   transformerDirectives(),
   //   transformerVariantGroup(),
   // ],
+  rules: [
+    [/^animate\-fadein\-shift\-(\w)\-(\-?\d+)\-(\d+)$/, (matches) => {
+      const animationName = `fadein-shift-${matches[1]}-${matches[2]}-${matches[3]}`
+      const animationBody = `{ 
+        0%, 10% { 
+          -webkit-transform: translate${matches[1].toUpperCase()}(${matches[2]}rem);
+          transform: translate${matches[1].toUpperCase()}(${matches[2]}rem);
+          opacity: 0;
+        } 
+        90%, 100% { 
+          -webkit-transform: translate${matches[1].toUpperCase()}(0rem);
+          transform: translate${matches[1].toUpperCase()}(0rem);
+          opacity: 1;
+        } 
+      }`
+      return `@keyframes ${animationName} ${animationBody}
+@-webkit-keyframes ${animationName} ${animationBody}
+.animate-${animationName} {
+  -webkit-animation: ${animationName} ${matches[3]}ms cubic-bezier(0, 0, 0.2, 1) 1;
+  animation: ${animationName} ${matches[3]}ms cubic-bezier(0, 0, 0.2, 1) 1;
+}`
+    }],
+  ],
 })

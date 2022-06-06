@@ -27,7 +27,6 @@ const getOption = (rawData: DailyData[]) => {
   return {
     title: {
       text: '中国疫情数据一览',
-      subtext: '数据来自丁香园',
     },
     backgroundColor: 'transparent',
     // 从 composable 读取配置
