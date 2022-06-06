@@ -16,7 +16,7 @@ const refreshData = () => {
   nextTick(() => {
     (dataLineRef as any).refreshData();
     (mapRef as any).refreshData();
-    (threeCountRef as any).refreshData()
+    (threeCountRef as any).refreshData();
     (newAdds as any).refreshData()
   })
 }
@@ -56,7 +56,7 @@ console.log('province', startTime.value, endTime.value)
       />
       <NewAdds
         ref="newAddsRef"
-        path="/province/daily"
+        path="/province/newAdd"
         :map-code="code"
         :start-time="startTime"
         :end-time="endTime"

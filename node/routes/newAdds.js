@@ -13,10 +13,10 @@ function getNew(data) {
     for (let i = 1; i < data.length; i++) {
         const last = JSON.parse(JSON.stringify(data[i - 1]))
         const cur = JSON.parse(JSON.stringify(data[i]))
-        cur.confirmedCount = cur.confirmedCount - last.confirmedCount
-        cur.suspectedCount = cur.suspectedCount - last.suspectedCount
-        cur.curedCount = cur.curedCount - last.curedCount
-        cur.deadCount = cur.deadCount - last.deadCount
+        cur.confirmedCount = Math.max(cur.confirmedCount - last.confirmedCount, 0)
+        cur.suspectedCount = Math.max(cur.suspectedCount - last.suspectedCount, 0)
+        cur.curedCount = Math.max(cur.curedCount - last.curedCount, 0)
+        cur.deadCount = Math.max(cur.deadCount - last.deadCount, 0)
         retVal.push(cur)
     }
     return retVal
